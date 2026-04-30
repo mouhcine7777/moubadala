@@ -20,53 +20,13 @@ export default function ContactPage() {
     setError("");
 
     try {
-      const { Resend } = await import("resend");
-      const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-
-      const { error: resendError } = await resend.emails.send({
-        from: "Contact Moubadala <noreply@moubadala.ma>",
-        to: "contact@moubadala.ma",
-        replyTo: form.email,
-        subject: `[Contact] ${form.sujet}`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
-            <div style="background: #0D3B66; padding: 24px 32px; border-radius: 8px 8px 0 0;">
-              <h1 style="color: white; margin: 0; font-size: 20px;">Nouveau message — Moubadala</h1>
-            </div>
-            <div style="border: 1px solid #e5e7eb; border-top: none; padding: 32px; border-radius: 0 0 8px 8px;">
-              <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                  <td style="padding: 8px 0; color: #6b7280; font-size: 13px; width: 120px;">Nom</td>
-                  <td style="padding: 8px 0; font-weight: 600;">${form.nom}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; color: #6b7280; font-size: 13px;">Email</td>
-                  <td style="padding: 8px 0;">
-                    <a href="mailto:${form.email}" style="color: #0D3B66;">${form.email}</a>
-                  </td>
-                </tr>
-                ${form.telephone ? `
-                <tr>
-                  <td style="padding: 8px 0; color: #6b7280; font-size: 13px;">Téléphone</td>
-                  <td style="padding: 8px 0;">${form.telephone}</td>
-                </tr>` : ""}
-                <tr>
-                  <td style="padding: 8px 0; color: #6b7280; font-size: 13px;">Sujet</td>
-                  <td style="padding: 8px 0; font-weight: 600;">${form.sujet}</td>
-                </tr>
-              </table>
-              <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
-              <p style="color: #6b7280; font-size: 13px; margin-bottom: 8px;">Message</p>
-              <p style="white-space: pre-wrap; line-height: 1.6; margin: 0;">${form.message}</p>
-              <div style="margin-top: 32px; padding: 16px; background: #f9fafb; border-radius: 6px; font-size: 12px; color: #9ca3af;">
-                Répondez directement à cet email pour contacter ${form.nom}.
-              </div>
-            </div>
-          </div>
-        `,
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
 
-      if (resendError) {
+      if (!res.ok) {
         setError("Erreur lors de l'envoi. Veuillez réessayer.");
       } else {
         setSent(true);
