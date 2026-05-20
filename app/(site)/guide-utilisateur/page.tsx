@@ -33,7 +33,7 @@ const steps = [
   },
   {
     number: 4,
-    title: "Paramètres spécifiques « Barter »",
+    title: "Paramètres spécifiques « Echange »",
     items: [
       <><strong>Type d'échange</strong> : Service↔Service, Produit↔Service, Produit↔Produit.</>,
       <><strong>Équivalence souhaitée</strong> : par ex. 80 % barter + 20 % numéraire.</>,

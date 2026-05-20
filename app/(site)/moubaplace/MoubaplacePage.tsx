@@ -22,18 +22,6 @@ const TYPE_LABEL: Record<string, string> = {
   request: 'Demande',
 }
 
-const CATEGORIES = [
-  'IT & Digital', 'Marketing & Communication', 'Finance & Comptabilité',
-  'Industrie & Production', 'Commerce & Distribution', 'Transport & Logistique',
-  'Immobilier & Construction', 'Santé & Bien-être', 'Formation & Education',
-  'Hôtellerie & Restauration', 'Médias & Création', 'Autre',
-]
-
-const CITIES = [
-  'Casablanca', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Agadir',
-  'Meknès', 'Oujda', 'Kenitra', 'Tétouan', 'El Jadida', 'Autre',
-]
-
 const EXCHANGE_TYPES = [
   { value: 'service_service', label: 'Service ↔ Service' },
   { value: 'product_service', label: 'Produit ↔ Service' },
@@ -51,10 +39,10 @@ function Chip({
     <button
       onClick={onClick}
       className={clsx(
-        'text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors whitespace-nowrap',
+        'text-sm font-semibold px-3 py-1.5 rounded-full border transition-colors whitespace-nowrap',
         active
           ? 'bg-[#0D3B66] text-white border-[#0D3B66]'
-          : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+          : 'bg-white text-black border-gray-200 hover:border-gray-300'
       )}
     >
       {children}
@@ -70,7 +58,6 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
   const [exchangeFilter, setExchangeFilter] = useState<string>('')
   const [showFilters, setShowFilters]   = useState(false)
 
-  // Villes et catégories présentes dans les annonces
   const availableCities = useMemo(() =>
     [...new Set(listings.map((l: any) => l.city).filter(Boolean))].sort()
   , [listings])
@@ -116,7 +103,7 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
         <div className="max-w-7xl mx-auto flex flex-col gap-5">
           <div className="text-center">
             <h1 className="text-white text-3xl font-bold mb-1">Moubaplace</h1>
-            <p className="text-white/60 text-sm">
+            <p className="text-white/80 text-base">
               {listings.length} annonce{listings.length !== 1 ? 's' : ''} disponible{listings.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -147,7 +134,7 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
                 'flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition-colors shadow-sm',
                 showFilters || activeFiltersCount > 0
                   ? 'bg-[#F5A623] text-white'
-                  : 'bg-white text-gray-600 hover:bg-gray-50'
+                  : 'bg-white text-black hover:bg-gray-50'
               )}
             >
               <SlidersHorizontal size={15}/>
@@ -166,22 +153,18 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
 
               {/* Type */}
               <div className="flex flex-col gap-2">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Type</p>
+                <p className="text-sm font-bold text-black uppercase tracking-wide">Type</p>
                 <div className="flex gap-2 flex-wrap">
                   <Chip active={typeFilter === ''} onClick={() => setTypeFilter('')}>Tous</Chip>
-                  <Chip active={typeFilter === 'offer'} onClick={() => setTypeFilter('offer')}>
-                    Offres
-                  </Chip>
-                  <Chip active={typeFilter === 'request'} onClick={() => setTypeFilter('request')}>
-                    Demandes
-                  </Chip>
+                  <Chip active={typeFilter === 'offer'} onClick={() => setTypeFilter('offer')}>Offres</Chip>
+                  <Chip active={typeFilter === 'request'} onClick={() => setTypeFilter('request')}>Demandes</Chip>
                 </div>
               </div>
 
               {/* Catégorie */}
               {availableCategories.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Catégorie</p>
+                  <p className="text-sm font-bold text-black uppercase tracking-wide">Catégorie</p>
                   <div className="flex gap-2 flex-wrap">
                     <Chip active={categoryFilter === ''} onClick={() => setCategoryFilter('')}>Toutes</Chip>
                     {availableCategories.map((cat: string) => (
@@ -196,7 +179,7 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
               {/* Ville */}
               {availableCities.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Ville</p>
+                  <p className="text-sm font-bold text-black uppercase tracking-wide">Ville</p>
                   <div className="flex gap-2 flex-wrap">
                     <Chip active={cityFilter === ''} onClick={() => setCityFilter('')}>Toutes</Chip>
                     {availableCities.map((city: string) => (
@@ -210,7 +193,7 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
 
               {/* Type échange */}
               <div className="flex flex-col gap-2">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Type d'échange</p>
+                <p className="text-sm font-bold text-black uppercase tracking-wide">Type d'échange</p>
                 <div className="flex gap-2 flex-wrap">
                   <Chip active={exchangeFilter === ''} onClick={() => setExchangeFilter('')}>Tous</Chip>
                   {EXCHANGE_TYPES.map(et => (
@@ -231,14 +214,14 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
 
         {/* Barre résultats + clear */}
         <div className="flex items-center justify-between mb-5">
-          <p className="text-sm text-gray-500">
+          <p className="text-base text-black">
             <span className="font-semibold text-[#0D3B66]">{filtered.length}</span> résultat{filtered.length !== 1 ? 's' : ''}
             {hasActiveFilters && ' · filtres actifs'}
           </p>
           {hasActiveFilters && (
             <button
               onClick={clearAll}
-              className="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1 transition-colors"
+              className="text-sm text-black hover:text-gray-700 flex items-center gap-1 transition-colors"
             >
               <X size={12}/> Effacer les filtres
             </button>
@@ -248,7 +231,7 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
         {filtered.length === 0 ? (
           <div className="text-center py-20 flex flex-col items-center gap-3">
             <Search size={32} className="text-gray-200"/>
-            <p className="text-gray-400 font-semibold">Aucune annonce ne correspond à votre recherche</p>
+            <p className="text-black font-semibold text-base">Aucune annonce ne correspond à votre recherche</p>
             <button onClick={clearAll} className="text-sm text-[#0D3B66] underline underline-offset-2">
               Effacer les filtres
             </button>
@@ -275,57 +258,57 @@ export default function MoubaplacePage({ listings }: { listings: Listing[] }) {
                 <div className="p-4 flex flex-col gap-2.5 flex-1">
                   {/* Badges */}
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className={clsx('text-xs font-semibold px-2 py-0.5 rounded-full', TYPE_COLOR[listing.listing_type])}>
+                    <span className={clsx('text-sm font-semibold px-2 py-0.5 rounded-full', TYPE_COLOR[listing.listing_type])}>
                       {TYPE_LABEL[listing.listing_type]}
                     </span>
                     {listing.category && (
-                      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                      <span className="text-sm text-black bg-gray-100 px-2 py-0.5 rounded-full">
                         {listing.category}
                       </span>
                     )}
                   </div>
 
                   {/* Titre */}
-                  <h3 className="font-bold text-[#0D3B66] text-sm leading-snug line-clamp-2">
+                  <h3 className="font-bold text-[#0D3B66] text-base leading-snug line-clamp-2">
                     {listing.title}
                   </h3>
 
                   {/* Description */}
                   {listing.description && (
-                    <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">
+                    <p className="text-sm text-black leading-relaxed line-clamp-2">
                       {listing.description}
                     </p>
                   )}
 
                   <div className="mt-auto flex flex-col gap-2 pt-3 border-t border-gray-100">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-[#F5A623]">
+                      <span className="text-base font-bold text-[#F5A623]">
                         {listing.value_mad?.toLocaleString()} MAD
                       </span>
                       {listing.exchange_type && (
-                        <span className="text-xs text-gray-400 flex items-center gap-1">
-                          <ArrowLeftRight size={10}/>{EXCHANGE_LABEL[listing.exchange_type]}
+                        <span className="text-sm text-black flex items-center gap-1">
+                          <ArrowLeftRight size={12}/>{EXCHANGE_LABEL[listing.exchange_type]}
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center justify-between text-xs text-gray-400">
+                    <div className="flex items-center justify-between text-sm text-black">
                       <span className="flex items-center gap-1">
-                        <MapPin size={10}/>{listing.city ?? listing.profiles?.city}
+                        <MapPin size={12}/>{listing.city ?? listing.profiles?.city}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Clock size={10}/>
+                        <Clock size={12}/>
                         {formatDistanceToNow(new Date(listing.created_at), { addSuffix: true, locale: fr })}
                       </span>
                     </div>
                     {listing.profiles?.company_name && (
-  <Link
-    href={`/entreprises/${listing.clerk_user_id}`}
-    onClick={e => e.stopPropagation()}
-    className="text-xs text-[#0D3B66]/60 font-medium hover:text-[#0D3B66] hover:underline truncate"
-  >
-    {listing.profiles.company_name}
-  </Link>
-)}
+                      <Link
+                        href={`/entreprises/${listing.clerk_user_id}`}
+                        onClick={e => e.stopPropagation()}
+                        className="text-sm text-[#0D3B66] font-medium hover:text-[#0D3B66] hover:underline truncate"
+                      >
+                        {listing.profiles.company_name}
+                      </Link>
+                    )}
                   </div>
                 </div>
               </Link>

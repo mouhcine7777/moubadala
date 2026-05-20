@@ -112,32 +112,32 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
     startTransition(() => router.refresh())
   }
 
-  // Formulaire create/edit
+  // ── FORM (create / edit) ──────────────────────────────────────
   if (mode === 'create' || mode === 'edit') {
     return (
       <form onSubmit={handleSave} className="flex flex-col gap-5">
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <h3 className="text-sm font-bold text-[#0D3B66]">
-            {mode === 'create' ? 'Nouvel article' : 'Modifier l\'article'}
+            {mode === 'create' ? 'Nouvel article' : "Modifier l'article"}
           </h3>
           <button
             type="button"
             onClick={() => setMode('list')}
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-2 rounded-lg"
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-2 rounded-lg shrink-0"
           >
             <X size={13}/> Annuler
           </button>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 sm:p-6 flex flex-col gap-5">
 
           {/* Cover */}
           <div className="flex flex-col gap-2">
             <label className="text-xs font-semibold text-[#0D3B66]">Image de couverture</label>
             <input ref={coverRef} type="file" accept="image/*" onChange={handleCoverChange} className="hidden"/>
             {form.cover_url ? (
-              <div className="relative group w-full h-40 rounded-xl overflow-hidden border border-gray-100">
+              <div className="relative group w-full h-36 sm:h-40 rounded-xl overflow-hidden border border-gray-100">
                 <img src={form.cover_url} alt="" className="w-full h-full object-cover"/>
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button
@@ -161,7 +161,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                 type="button"
                 onClick={() => coverRef.current?.click()}
                 disabled={uploadingCover}
-                className="flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#0D3B66]/30 rounded-xl p-8 text-xs text-gray-400 hover:text-[#0D3B66] transition-colors"
+                className="flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#0D3B66]/30 rounded-xl p-6 sm:p-8 text-xs text-gray-400 hover:text-[#0D3B66] transition-colors"
               >
                 <Upload size={16}/>
                 {uploadingCover ? 'Upload...' : 'Ajouter une image de couverture · Max 2 Mo'}
@@ -211,7 +211,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
           {/* Publié */}
           <label className="flex items-center gap-3 cursor-pointer">
             <div className={clsx(
-              'relative w-10 h-5 rounded-full transition-colors',
+              'relative w-10 h-5 rounded-full transition-colors shrink-0',
               form.published ? 'bg-green-500' : 'bg-gray-200'
             )}>
               <input
@@ -231,7 +231,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
           </label>
         </div>
 
-        <div className="flex items-center gap-3 justify-end">
+        <div className="flex items-center gap-3 justify-end flex-wrap">
           <button
             type="button"
             onClick={() => setMode('list')}
@@ -244,14 +244,14 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
             disabled={saving}
             className="flex items-center gap-2 bg-[#0D3B66] hover:bg-[#0a2f52] disabled:opacity-40 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
           >
-            {saving ? 'Enregistrement...' : mode === 'create' ? 'Publier l\'article' : 'Enregistrer'}
+            {saving ? 'Enregistrement...' : mode === 'create' ? "Publier l'article" : 'Enregistrer'}
           </button>
         </div>
       </form>
     )
   }
 
-  // Liste des articles
+  // ── LIST ─────────────────────────────────────────────────────
   return (
     <div className="flex flex-col gap-4">
       <button
@@ -262,7 +262,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
       </button>
 
       {posts.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-12 text-center shadow-sm">
+        <div className="bg-white rounded-xl border border-gray-100 p-10 sm:p-12 text-center shadow-sm">
           <FileText size={32} className="text-gray-200 mx-auto mb-3"/>
           <p className="text-gray-400 text-sm">Aucun article. Créez votre premier article.</p>
         </div>
@@ -270,11 +270,11 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
         <div className="flex flex-col gap-3">
           {posts.map(post => (
             <div key={post.id} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="flex items-start gap-4 p-5">
+              <div className="flex flex-col sm:flex-row items-start gap-4 p-4 sm:p-5">
 
                 {/* Cover thumbnail */}
                 {post.cover_url && (
-                  <div className="w-20 h-16 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                  <div className="w-full sm:w-20 h-40 sm:h-16 rounded-lg overflow-hidden shrink-0 bg-gray-100">
                     <img src={post.cover_url} alt="" className="w-full h-full object-cover"/>
                   </div>
                 )}
@@ -299,7 +299,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto shrink-0">
                   {post.published && (
                     <a
                       href={`/blog/${post.slug}`}

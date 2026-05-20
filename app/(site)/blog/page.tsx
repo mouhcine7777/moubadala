@@ -51,7 +51,7 @@ export default async function BlogPage() {
                     {post.title}
                   </h2>
                   {post.excerpt && (
-                    <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
+                    <p className="text-sm text-black leading-relaxed line-clamp-3">
                       {post.excerpt}
                     </p>
                   )}
