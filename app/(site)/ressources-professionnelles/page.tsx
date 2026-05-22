@@ -49,28 +49,6 @@ const resources = [
   },
   {
     icon: <BookOpen size={28} className="text-[#0D3B66]" />,
-    title: "Guide Utilisateurs des Échanges",
-    subtitle: "Document d'information",
-    description: "Guide complet sur les aspects juridiques et fiscaux des échanges inter-entreprises au Maroc.",
-    tag: "Juridique",
-    tagColor: "bg-blue-50 text-blue-600",
-    files: [
-      { label: ".PDF", href: "/ressources/guide-echanges.pdf", ext: "PDF" },
-    ],
-  },
-  {
-    icon: <BookOpen size={28} className="text-[#0D3B66]" />,
-    title: "Guide d'Utilisation",
-    subtitle: "Document d'information",
-    description: "Guide complet pour bien utiliser la plateforme et tirer le meilleur parti de vos échanges inter-entreprises.",
-    tag: "Juridique",
-    tagColor: "bg-blue-50 text-blue-600",
-    files: [
-      { label: "Consulter", href: "/guide-utilisateur", ext: "LINK" },
-    ],
-  },
-  {
-    icon: <BookOpen size={28} className="text-[#0D3B66]" />,
     title: "Guide Espace Client",
     subtitle: "Document d'information",
     description: "Guide pratique pour naviguer dans votre espace client, gérer vos échanges et exploiter toutes les fonctionnalités disponibles.",
@@ -78,6 +56,17 @@ const resources = [
     tagColor: "bg-blue-50 text-blue-600",
     files: [
       { label: ".PDF", href: "/ressources/guide-utilisateur.pdf", ext: "PDF" },
+    ],
+  },
+  {
+    icon: <BookOpen size={28} className="text-[#0D3B66]" />,
+    title: "Comment Publier une Annonce",
+    subtitle: "Document d'information",
+    description: "Guide complet pour bien utiliser la plateforme et tirer le meilleur parti de vos échanges inter-entreprises.",
+    tag: "Juridique",
+    tagColor: "bg-blue-50 text-blue-600",
+    files: [
+      { label: "Consulter", href: "/guide-utilisateur", ext: "LINK" },
     ],
   },
 ];

@@ -6,8 +6,7 @@ import { supabase } from '@/lib/supabase'
 import type { Listing } from '@/lib/types'
 import {
   Pencil, Eye, Archive, RotateCcw, Trash2,
-  Plus, Clock, CheckCircle, PauseCircle,
-  ArrowLeftRight, MapPin, TrendingUp
+  Plus, MapPin, TrendingUp, ArrowLeftRight
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { fr } from 'date-fns/locale'
@@ -80,14 +79,14 @@ export default function MesAnnoncesClient({
 
       {/* Header actions */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-black">
           <span className="font-semibold text-[#0D3B66]">{listings.length}</span> annonce{listings.length !== 1 ? 's' : ''} au total
         </p>
         <Link
           href="/publier"
           className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#e09510] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
         >
-          <Plus size={14}/> Nouvelle annonce
+          <Plus size={15}/> Nouvelle annonce
         </Link>
       </div>
 
@@ -98,17 +97,17 @@ export default function MesAnnoncesClient({
             key={t}
             onClick={() => setTab(t)}
             className={clsx(
-              'text-xs font-semibold px-4 py-2 rounded-full border transition-colors',
+              'text-sm font-semibold px-5 py-2.5 rounded-full border transition-colors',
               tab === t
                 ? 'bg-[#0D3B66] text-white border-[#0D3B66]'
-                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                : 'bg-white text-black border-gray-200 hover:border-gray-300'
             )}
           >
             {t}
             {counts[t] > 0 && (
               <span className={clsx(
-                'ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full',
-                tab === t ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+                'ml-1.5 text-xs font-bold px-2 py-0.5 rounded-full',
+                tab === t ? 'bg-white/20 text-white' : 'bg-gray-100 text-black'
               )}>
                 {counts[t]}
               </span>
@@ -120,10 +119,10 @@ export default function MesAnnoncesClient({
       {/* Liste */}
       {filtered.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-100 p-12 text-center shadow-sm">
-          <p className="text-gray-400 text-sm">Aucune annonce dans cette catégorie.</p>
+          <p className="text-black text-base">Aucune annonce dans cette catégorie.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {filtered.map(listing => {
             const sc = STATUS_CONFIG[listing.status]
             const isLoading = loadingId === listing.id
@@ -136,39 +135,39 @@ export default function MesAnnoncesClient({
                   listing.archived ? 'border-gray-100 opacity-70' : 'border-gray-100'
                 )}
               >
-                <div className="px-5 py-4 flex flex-col md:flex-row md:items-center gap-4">
+                <div className="px-5 py-5 flex flex-col md:flex-row md:items-center gap-4">
 
                   {/* Image thumbnail */}
                   {listing.images?.[0] && (
-                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                    <div className="w-18 h-18 rounded-lg overflow-hidden shrink-0 bg-gray-100">
                       <img src={listing.images[0]} className="w-full h-full object-cover" alt=""/>
                     </div>
                   )}
 
                   {/* Infos */}
-                  <div className="flex-1 flex flex-col gap-1.5 min-w-0">
+                  <div className="flex-1 flex flex-col gap-2 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className={clsx('text-xs font-semibold px-2.5 py-0.5 rounded-full', sc.color)}>
+                      <span className={clsx('text-sm font-semibold px-3 py-1 rounded-full', sc.color)}>
                         {sc.label}
                       </span>
                       {listing.listing_type && (
-                        <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                        <span className="text-sm text-black bg-gray-100 px-2.5 py-0.5 rounded-full">
                           {listing.listing_type === 'offer' ? 'Offre' : 'Demande'}
                         </span>
                       )}
                       {listing.category && (
-                        <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                        <span className="text-sm text-black bg-gray-100 px-2.5 py-0.5 rounded-full">
                           {listing.category}
                         </span>
                       )}
                     </div>
 
-                    <p className="text-sm font-bold text-[#0D3B66] truncate">{listing.title}</p>
+                    <p className="text-base font-bold text-[#0D3B66] truncate">{listing.title}</p>
 
-                    <div className="flex items-center gap-3 text-xs text-gray-400 flex-wrap">
+                    <div className="flex items-center gap-3 text-sm text-black flex-wrap">
                       {listing.city && (
                         <span className="flex items-center gap-1">
-                          <MapPin size={10}/>{listing.city}
+                          <MapPin size={12}/>{listing.city}
                         </span>
                       )}
                       {listing.value_mad && (
@@ -178,11 +177,11 @@ export default function MesAnnoncesClient({
                       )}
                       {listing.exchange_type && (
                         <span className="flex items-center gap-1">
-                          <ArrowLeftRight size={10}/>{EXCHANGE_LABEL[listing.exchange_type]}
+                          <ArrowLeftRight size={12}/>{EXCHANGE_LABEL[listing.exchange_type]}
                         </span>
                       )}
                       <span className="flex items-center gap-1">
-                        <TrendingUp size={10}/>{listing.views ?? 0} vue{(listing.views ?? 0) !== 1 ? 's' : ''}
+                        <TrendingUp size={12}/>{listing.views ?? 0} vue{(listing.views ?? 0) !== 1 ? 's' : ''}
                       </span>
                       <span>
                         {formatDistanceToNow(new Date(listing.created_at), { addSuffix: true, locale: fr })}
@@ -192,59 +191,56 @@ export default function MesAnnoncesClient({
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 shrink-0 flex-wrap">
-                    {/* Voir sur Moubaplace */}
+
                     {listing.status === 'published' && !listing.archived && (
                       <Link
                         href={`/moubaplace/${listing.id}`}
                         target="_blank"
-                        className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#0D3B66] border border-gray-200 px-3 py-2 rounded-lg transition-colors"
+                        className="flex items-center gap-1.5 text-sm text-black hover:text-[#0D3B66] border border-gray-200 px-3 py-2 rounded-lg transition-colors"
                       >
-                        <Eye size={12}/> Voir
+                        <Eye size={13}/> Voir
                       </Link>
                     )}
 
-                    {/* Modifier */}
                     {!listing.archived && (
                       <Link
                         href={`/dashboard/annonces/${listing.id}`}
-                        className="flex items-center gap-1.5 text-xs text-[#0D3B66] border border-[#0D3B66]/20 hover:border-[#0D3B66] px-3 py-2 rounded-lg transition-colors"
+                        className="flex items-center gap-1.5 text-sm text-[#0D3B66] border border-[#0D3B66]/20 hover:border-[#0D3B66] px-3 py-2 rounded-lg transition-colors"
                       >
-                        <Pencil size={12}/> Modifier
+                        <Pencil size={13}/> Modifier
                       </Link>
                     )}
 
-                    {/* Archiver / Désarchiver */}
                     {!listing.archived ? (
                       <button
                         disabled={isLoading}
                         onClick={() => updateListing(listing.id, { archived: true })}
-                        className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
+                        className="flex items-center gap-1.5 text-sm text-black hover:text-gray-700 border border-gray-200 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
                       >
-                        <Archive size={12}/> {isLoading ? '...' : 'Archiver'}
+                        <Archive size={13}/> {isLoading ? '...' : 'Archiver'}
                       </button>
                     ) : (
                       <button
                         disabled={isLoading}
                         onClick={() => updateListing(listing.id, { archived: false })}
-                        className="flex items-center gap-1.5 text-xs text-amber-600 hover:text-amber-700 border border-amber-200 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
+                        className="flex items-center gap-1.5 text-sm text-amber-600 hover:text-amber-700 border border-amber-200 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
                       >
-                        <RotateCcw size={12}/> {isLoading ? '...' : 'Réactiver'}
+                        <RotateCcw size={13}/> {isLoading ? '...' : 'Réactiver'}
                       </button>
                     )}
 
-                    {/* Supprimer */}
                     {confirmDeleteId === listing.id ? (
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => deleteListing(listing.id)}
                           disabled={isLoading}
-                          className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
+                          className="text-sm font-semibold text-white bg-red-500 hover:bg-red-600 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
                         >
                           {isLoading ? '...' : 'Confirmer'}
                         </button>
                         <button
                           onClick={() => setConfirmDeleteId(null)}
-                          className="text-xs text-gray-400 border border-gray-200 px-3 py-2 rounded-lg"
+                          className="text-sm text-black border border-gray-200 px-3 py-2 rounded-lg"
                         >
                           Annuler
                         </button>
@@ -252,9 +248,9 @@ export default function MesAnnoncesClient({
                     ) : (
                       <button
                         onClick={() => setConfirmDeleteId(listing.id)}
-                        className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-600 border border-red-100 hover:border-red-200 px-3 py-2 rounded-lg transition-colors"
+                        className="flex items-center gap-1.5 text-sm text-red-400 hover:text-red-600 border border-red-100 hover:border-red-200 px-3 py-2 rounded-lg transition-colors"
                       >
-                        <Trash2 size={12}/>
+                        <Trash2 size={13}/>
                       </button>
                     )}
                   </div>
@@ -262,7 +258,7 @@ export default function MesAnnoncesClient({
 
                 {/* Barre expiration */}
                 {listing.expires_at && !listing.archived && (
-                  <div className="px-5 py-2 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+                  <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-sm text-black">
                     <span>Expire {formatDistanceToNow(new Date(listing.expires_at), { addSuffix: true, locale: fr })}</span>
                     <button
                       onClick={() => {

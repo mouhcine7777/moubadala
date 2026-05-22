@@ -53,7 +53,7 @@ export default async function AdminLayout({
                 className={`text-sm font-medium px-4 sm:px-5 py-3.5 border-b-2 transition-colors whitespace-nowrap ${
                   pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))
                     ? 'border-[#0D3B66] text-[#0D3B66]'
-                    : 'border-transparent text-gray-400 hover:text-[#0D3B66]'
+                    : 'border-transparent text-black hover:text-[#0D3B66]'
                 }`}
               >
                 {item.label}

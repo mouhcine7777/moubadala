@@ -30,6 +30,7 @@ const navLinks: NavItem[] = [
     dropdown: [
       { label: "Ressources Professionnelles", href: "/ressources-professionnelles", protected: true },
       { label: "Votre Adhésions", href: "/adhesions" },
+      { label: "Votre inscription", href: "/votre-inscription" },
     ],
   },
   { label: "Blog", href: "/blog" },
@@ -54,10 +55,9 @@ export default function Header({
     <header className="bg-[#0D3B66] sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 flex items-center h-24 gap-8">
 
-
         {/* Logo */}
         <Link href="/" className="shrink-0">
-          <Image src="/logo.png" alt="Moubadala" width={160} height={44} className="h-11 w-auto" />
+          <Image src="/logo.png" alt="Moubadala" width={160} height={44} className="h-16 w-auto" />
         </Link>
 
         {/* Desktop Nav */}
@@ -70,14 +70,14 @@ export default function Header({
               onMouseLeave={() => setOpenDropdown(null)}
             >
               {link.href === '#' ? (
-                <button className="flex items-center gap-1 text-white text-base font-medium px-4 py-2.5 rounded hover:text-[#F5A623] hover:bg-white/10 transition-colors">
+                <button className="flex items-center gap-1 text-white text-[19px] font-medium px-4 py-2.5 rounded hover:text-[#F5A623] hover:bg-white/10 transition-colors">
                   {link.label}
                   {link.dropdown && <ChevronDown size={15} className="opacity-60" />}
                 </button>
               ) : (
                 <Link
                   href={link.href}
-                  className="flex items-center gap-1 text-white text-[17px] font-medium px-4 py-2.5 rounded hover:text-[#F5A623] hover:bg-white/10 transition-colors"
+                  className="flex items-center gap-1 text-white text-[19px] font-medium px-4 py-2.5 rounded hover:text-[#F5A623] hover:bg-white/10 transition-colors"
                 >
                   {link.label}
                   {link.dropdown && <ChevronDown size={15} className="opacity-60" />}

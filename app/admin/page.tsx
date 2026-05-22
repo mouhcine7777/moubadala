@@ -27,12 +27,12 @@ export default async function AdminPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-base font-bold text-[#0D3B66] mb-4">Vue générale</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <h2 className="text-xl font-bold text-[#0D3B66] mb-6">Vue générale</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map(s => (
-            <div key={s.label} className={`${s.bg} rounded-xl border border-gray-100 p-5 shadow-sm`}>
-              <p className={`text-2xl font-bold ${s.text}`}>{s.value}</p>
-              <p className="text-xs text-gray-400 mt-1">{s.label}</p>
+            <div key={s.label} className={`${s.bg} rounded-xl border border-gray-100 p-7 shadow-sm`}>
+              <p className={`text-4xl font-bold ${s.text}`}>{s.value}</p>
+              <p className="text-sm text-black mt-2">{s.label}</p>
             </div>
           ))}
         </div>

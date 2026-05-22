@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { formatDistanceToNow } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { ArrowLeftRight, MapPin, ExternalLink, Building2 } from 'lucide-react'
+import { MapPin, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import clsx from 'clsx'
 
@@ -11,12 +11,6 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   accepted:   { label: 'Acceptée',              color: 'bg-green-100 text-green-800'   },
   refused:    { label: 'Refusée',               color: 'bg-red-100 text-red-600'       },
   finalizing: { label: 'En finalisation',       color: 'bg-purple-100 text-purple-800' },
-}
-
-const EXCHANGE_LABEL: Record<string, string> = {
-  service_service: 'Service ↔ Service',
-  product_service: 'Produit ↔ Service',
-  product_product: 'Produit ↔ Produit',
 }
 
 const FILTERS = ['Toutes', 'En attente', 'Acceptées', 'En finalisation', 'Refusées'] as const
@@ -38,19 +32,19 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
     : requests.filter(r => r.status === FILTER_STATUS[filter])
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
 
       {/* Filtres */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-3 flex-wrap">
         {FILTERS.map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={clsx(
-              'text-xs font-semibold px-4 py-2 rounded-full border transition-colors',
+              'text-sm font-semibold px-5 py-2.5 rounded-full border transition-colors',
               filter === f
                 ? 'bg-[#0D3B66] text-white border-[#0D3B66]'
-                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                : 'bg-white text-black border-gray-200 hover:border-gray-300'
             )}
           >
             {f}
@@ -60,8 +54,8 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
                 : requests.filter(r => r.status === FILTER_STATUS[f]).length
               return count > 0 ? (
                 <span className={clsx(
-                  'ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full',
-                  filter === f ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+                  'ml-1.5 text-xs font-bold px-2 py-0.5 rounded-full',
+                  filter === f ? 'bg-white/20 text-white' : 'bg-gray-100 text-black'
                 )}>
                   {count}
                 </span>
@@ -73,11 +67,11 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
 
       {/* Liste */}
       {filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-12 text-center text-gray-400 text-sm">
+        <div className="bg-white rounded-xl border border-gray-100 p-14 text-center text-black text-base">
           Aucune demande dans cette catégorie.
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {filtered.map((req: any) => {
             const sc = STATUS_CONFIG[req.status]
             const listing = req.listings
@@ -85,32 +79,32 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
             const receiver = req.receiver
 
             return (
-              <div key={req.id} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col gap-4">
+              <div key={req.id} className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5">
 
                 {/* Header : statut + date */}
                 <div className="flex items-center justify-between flex-wrap gap-2">
-                  <span className={clsx('text-xs font-semibold px-2.5 py-1 rounded-full', sc.color)}>
+                  <span className={clsx('text-sm font-semibold px-3 py-1 rounded-full', sc.color)}>
                     {sc.label}
                   </span>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-sm text-black">
                     {formatDistanceToNow(new Date(req.created_at), { addSuffix: true, locale: fr })}
                   </span>
                 </div>
 
                 {/* Annonce */}
                 {listing && (
-                  <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-2.5">
-                    <p className="text-xs text-gray-400 shrink-0">Annonce :</p>
+                  <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-3">
+                    <p className="text-sm text-black shrink-0">Annonce :</p>
                     <Link
                       href={`/moubaplace/${listing.id}`}
                       target="_blank"
-                      className="text-sm font-bold text-[#0D3B66] hover:underline flex items-center gap-1 truncate"
+                      className="text-base font-bold text-[#0D3B66] hover:underline flex items-center gap-1 truncate"
                     >
                       {listing.title}
-                      <ExternalLink size={11} className="shrink-0"/>
+                      <ExternalLink size={13} className="shrink-0"/>
                     </Link>
                     {listing.value_mad && (
-                      <span className="ml-auto text-xs font-bold text-[#F5A623] shrink-0">
+                      <span className="ml-auto text-sm font-bold text-[#F5A623] shrink-0">
                         {listing.value_mad.toLocaleString()} MAD
                       </span>
                     )}
@@ -118,24 +112,24 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
                 )}
 
                 {/* Parties */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                   {/* Demandeur */}
-                  <div className="flex items-start gap-3 border border-gray-100 rounded-lg p-3">
-                    <div className="w-8 h-8 rounded-full bg-[#F5A623] flex items-center justify-center text-white font-bold text-xs shrink-0">
+                  <div className="flex items-start gap-4 border border-gray-100 rounded-lg p-4">
+                    <div className="w-10 h-10 rounded-full bg-[#F5A623] flex items-center justify-center text-white font-bold text-sm shrink-0">
                       {sender?.company_name?.[0]?.toUpperCase()}
                     </div>
-                    <div className="flex flex-col gap-0.5 min-w-0">
-                      <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">Demandeur</p>
-                      <p className="text-sm font-bold text-[#0D3B66] truncate">{sender?.company_name}</p>
-                      <p className="text-xs text-gray-400">{sender?.sector}</p>
+                    <div className="flex flex-col gap-1 min-w-0">
+                      <p className="text-xs font-semibold text-black uppercase tracking-wide">Demandeur</p>
+                      <p className="text-base font-bold text-[#0D3B66] truncate">{sender?.company_name}</p>
+                      <p className="text-sm text-black">{sender?.sector}</p>
                       {sender?.city && (
-                        <p className="text-xs text-gray-400 flex items-center gap-1">
-                          <MapPin size={10}/>{sender.city}
+                        <p className="text-sm text-black flex items-center gap-1">
+                          <MapPin size={12}/>{sender.city}
                         </p>
                       )}
                       {sender?.email && (
-                        <a href={`mailto:${sender.email}`} className="text-xs text-[#0D3B66] hover:underline truncate">
+                        <a href={`mailto:${sender.email}`} className="text-sm text-[#0D3B66] hover:underline truncate">
                           {sender.email}
                         </a>
                       )}
@@ -143,21 +137,21 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
                   </div>
 
                   {/* Receveur */}
-                  <div className="flex items-start gap-3 border border-gray-100 rounded-lg p-3">
-                    <div className="w-8 h-8 rounded-full bg-[#0D3B66] flex items-center justify-center text-white font-bold text-xs shrink-0">
+                  <div className="flex items-start gap-4 border border-gray-100 rounded-lg p-4">
+                    <div className="w-10 h-10 rounded-full bg-[#0D3B66] flex items-center justify-center text-white font-bold text-sm shrink-0">
                       {receiver?.company_name?.[0]?.toUpperCase()}
                     </div>
-                    <div className="flex flex-col gap-0.5 min-w-0">
-                      <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">Propriétaire annonce</p>
-                      <p className="text-sm font-bold text-[#0D3B66] truncate">{receiver?.company_name}</p>
-                      <p className="text-xs text-gray-400">{receiver?.sector}</p>
+                    <div className="flex flex-col gap-1 min-w-0">
+                      <p className="text-xs font-semibold text-black uppercase tracking-wide">Propriétaire annonce</p>
+                      <p className="text-base font-bold text-[#0D3B66] truncate">{receiver?.company_name}</p>
+                      <p className="text-sm text-black">{receiver?.sector}</p>
                       {receiver?.city && (
-                        <p className="text-xs text-gray-400 flex items-center gap-1">
-                          <MapPin size={10}/>{receiver.city}
+                        <p className="text-sm text-black flex items-center gap-1">
+                          <MapPin size={12}/>{receiver.city}
                         </p>
                       )}
                       {receiver?.email && (
-                        <a href={`mailto:${receiver.email}`} className="text-xs text-[#0D3B66] hover:underline truncate">
+                        <a href={`mailto:${receiver.email}`} className="text-sm text-[#0D3B66] hover:underline truncate">
                           {receiver.email}
                         </a>
                       )}
@@ -168,8 +162,8 @@ export default function AdminRequests({ requests }: { requests: any[] }) {
                 {/* Message */}
                 {req.message && (
                   <div className="bg-gray-50 rounded-lg px-4 py-3 border-l-2 border-[#0D3B66]/20">
-                    <p className="text-xs text-gray-400 mb-1">Message initial :</p>
-                    <p className="text-sm text-gray-600 italic">"{req.message}"</p>
+                    <p className="text-sm text-black mb-1">Message initial :</p>
+                    <p className="text-base text-black italic">"{req.message}"</p>
                   </div>
                 )}
 

@@ -124,7 +124,6 @@ export default function DocumentsClient({
     startTransition(() => router.refresh())
   }
 
-  // Grouper par type
   const grouped = DOCUMENT_TYPES.map(({ value, label }) => ({
     type: value,
     label,
@@ -136,14 +135,12 @@ export default function DocumentsClient({
 
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-gray-500">
-            <span className="font-semibold text-[#0D3B66]">{documents.length}</span> document{documents.length !== 1 ? 's' : ''} stocké{documents.length !== 1 ? 's' : ''}
-          </p>
-        </div>
+        <p className="text-sm text-black">
+          <span className="font-semibold text-[#0D3B66]">{documents.length}</span> document{documents.length !== 1 ? 's' : ''} stocké{documents.length !== 1 ? 's' : ''}
+        </p>
         <button
           onClick={() => { setShowForm(!showForm); setError(''); setUploadSuccess(false) }}
-          className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#e09510] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+          className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#e09510] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
         >
           <Plus size={15}/> Ajouter un document
         </button>
@@ -153,30 +150,30 @@ export default function DocumentsClient({
       {showForm && (
         <form
           onSubmit={handleUpload}
-          className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4"
+          className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5"
         >
-          <h2 className="text-sm font-bold text-[#0D3B66] border-b border-gray-100 pb-3">
+          <h2 className="text-base font-bold text-[#0D3B66] border-b border-gray-100 pb-3">
             Nouveau document
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-[#0D3B66]">Nom du document *</label>
+              <label className="text-sm font-semibold text-[#0D3B66]">Nom du document *</label>
               <input
                 type="text"
                 required
                 value={form.name}
                 onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
                 placeholder="Ex : RC - 2024"
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D3B66]/20 focus:border-[#0D3B66]"
+                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D3B66]/20 focus:border-[#0D3B66] text-black"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-[#0D3B66]">Type de document *</label>
+              <label className="text-sm font-semibold text-[#0D3B66]">Type de document *</label>
               <select
                 value={form.type}
                 onChange={e => setForm(p => ({ ...p, type: e.target.value }))}
-                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D3B66]/20 focus:border-[#0D3B66] bg-white"
+                className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D3B66]/20 focus:border-[#0D3B66] bg-white text-black"
               >
                 {DOCUMENT_TYPES.map(t => (
                   <option key={t.value} value={t.value}>{t.label}</option>
@@ -205,30 +202,30 @@ export default function DocumentsClient({
             >
               {form.file ? (
                 <div className="flex items-center justify-center gap-3">
-                  <FileText size={20} className="text-green-600"/>
+                  <FileText size={22} className="text-green-600"/>
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-green-700">{form.file.name}</p>
-                    <p className="text-xs text-green-600">{formatBytes(form.file.size)}</p>
+                    <p className="text-base font-semibold text-green-700">{form.file.name}</p>
+                    <p className="text-sm text-green-600">{formatBytes(form.file.size)}</p>
                   </div>
                   <button
                     type="button"
                     onClick={e => { e.stopPropagation(); setForm(p => ({ ...p, file: null })); if (fileRef.current) fileRef.current.value = '' }}
-                    className="ml-2 text-gray-400 hover:text-red-500"
+                    className="ml-2 text-black hover:text-red-500"
                   >
-                    <X size={16}/>
+                    <X size={17}/>
                   </button>
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-2">
-                  <Upload size={24} className="text-gray-300"/>
-                  <p className="text-sm text-gray-400">Cliquez pour sélectionner un fichier</p>
-                  <p className="text-xs text-gray-300">PDF, Word, image · Max 2 Mo</p>
+                  <Upload size={26} className="text-gray-300"/>
+                  <p className="text-base text-black">Cliquez pour sélectionner un fichier</p>
+                  <p className="text-sm text-black">PDF, Word, image · Max 2 Mo</p>
                 </div>
               )}
             </div>
           </div>
 
-          {error && <p className="text-xs text-red-500">{error}</p>}
+          {error && <p className="text-sm text-red-500">{error}</p>}
 
           {uploadSuccess && (
             <div className="flex items-center gap-2 text-green-600 text-sm">
@@ -240,19 +237,19 @@ export default function DocumentsClient({
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="text-sm text-gray-500 border border-gray-200 px-4 py-2 rounded-lg hover:border-gray-300 transition-colors"
+              className="text-sm text-black border border-gray-200 px-4 py-2.5 rounded-lg hover:border-gray-300 transition-colors"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={uploading || !form.file || !form.name}
-              className="flex items-center gap-2 bg-[#0D3B66] hover:bg-[#0a2f52] disabled:opacity-40 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+              className="flex items-center gap-2 bg-[#0D3B66] hover:bg-[#0a2f52] disabled:opacity-40 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
             >
               {uploading ? (
                 <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin block"/>
               ) : (
-                <Upload size={14}/>
+                <Upload size={15}/>
               )}
               {uploading ? 'Upload...' : 'Enregistrer'}
             </button>
@@ -263,9 +260,9 @@ export default function DocumentsClient({
       {/* Liste documents */}
       {documents.length === 0 && !showForm ? (
         <div className="bg-white rounded-xl border border-gray-100 p-16 text-center shadow-sm">
-          <File size={36} className="text-gray-200 mx-auto mb-3"/>
-          <p className="text-gray-400 text-sm font-semibold mb-1">Aucun document</p>
-          <p className="text-gray-400 text-xs mb-4">
+          <File size={38} className="text-gray-200 mx-auto mb-3"/>
+          <p className="text-black text-base font-semibold mb-1">Aucun document</p>
+          <p className="text-black text-sm mb-5">
             Déposez vos documents légaux (RC, patente, attestations...) pour constituer votre dossier de confiance.
           </p>
           <button
@@ -281,37 +278,37 @@ export default function DocumentsClient({
             const tc = TYPE_CONFIG[group.type]
             return (
               <div key={group.type}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className={clsx('text-xs font-bold px-2.5 py-1 rounded-full', tc.bg, tc.color)}>
+                <div className="flex items-center gap-2.5 mb-3">
+                  <span className={clsx('text-sm font-bold px-3 py-1 rounded-full', tc.bg, tc.color)}>
                     {group.label}
                   </span>
-                  <span className="text-xs text-gray-400">{group.docs.length} fichier{group.docs.length !== 1 ? 's' : ''}</span>
+                  <span className="text-sm text-black">{group.docs.length} fichier{group.docs.length !== 1 ? 's' : ''}</span>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   {group.docs.map(doc => (
                     <div
                       key={doc.id}
                       className="bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4 flex items-center gap-4"
                     >
-                      <div className={clsx('w-9 h-9 rounded-full flex items-center justify-center shrink-0', tc.bg)}>
-                        <FileText size={16} className={tc.color}/>
+                      <div className={clsx('w-11 h-11 rounded-full flex items-center justify-center shrink-0', tc.bg)}>
+                        <FileText size={18} className={tc.color}/>
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#0D3B66] truncate">{doc.name}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">
+                        <p className="text-base font-semibold text-[#0D3B66] truncate">{doc.name}</p>
+                        <p className="text-sm text-black mt-0.5">
                           {doc.size ? formatBytes(doc.size) : ''} · Ajouté {format(new Date(doc.created_at), 'dd MMM yyyy', { locale: fr })}
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2 shrink-0">
+                      <div className="flex items-center gap-2.5 shrink-0">
                         <a
                           href={doc.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-xs text-[#0D3B66] border border-[#0D3B66]/20 hover:border-[#0D3B66] px-3 py-1.5 rounded-lg transition-colors"
+                          className="flex items-center gap-1.5 text-sm text-[#0D3B66] border border-[#0D3B66]/20 hover:border-[#0D3B66] px-3 py-2 rounded-lg transition-colors"
                         >
-                          <Download size={12}/> Télécharger
+                          <Download size={13}/> Télécharger
                         </a>
 
                         {confirmDeleteId === doc.id ? (
@@ -319,13 +316,13 @@ export default function DocumentsClient({
                             <button
                               onClick={() => handleDelete(doc.id)}
                               disabled={deletingId === doc.id}
-                              className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40"
+                              className="text-sm font-semibold text-white bg-red-500 hover:bg-red-600 px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
                             >
                               {deletingId === doc.id ? '...' : 'Confirmer'}
                             </button>
                             <button
                               onClick={() => setConfirmDeleteId(null)}
-                              className="text-xs text-gray-400 border border-gray-200 px-3 py-1.5 rounded-lg"
+                              className="text-sm text-black border border-gray-200 px-3 py-2 rounded-lg"
                             >
                               Annuler
                             </button>
@@ -333,9 +330,9 @@ export default function DocumentsClient({
                         ) : (
                           <button
                             onClick={() => setConfirmDeleteId(doc.id)}
-                            className="text-xs text-red-400 hover:text-red-600 border border-red-100 hover:border-red-200 p-1.5 rounded-lg transition-colors"
+                            className="text-sm text-red-400 hover:text-red-600 border border-red-100 hover:border-red-200 p-2 rounded-lg transition-colors"
                           >
-                            <Trash2 size={13}/>
+                            <Trash2 size={14}/>
                           </button>
                         )}
                       </div>

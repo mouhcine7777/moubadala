@@ -139,7 +139,7 @@ export default function FaqPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-[#0D3B66] to-[#1a8a6e] py-16 px-6 text-center text-white">
+      <section className="bg-gradient-to-r from-[#0D3B66] to-[#0D3B66] py-16 px-6 text-center text-white">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Foire Aux Questions
         </h1>

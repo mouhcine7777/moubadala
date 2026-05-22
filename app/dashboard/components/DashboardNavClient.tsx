@@ -53,7 +53,7 @@ export default function DashboardNavClient({
               'flex items-center gap-1.5 text-sm font-medium px-4 py-3.5 border-b-2 transition-colors whitespace-nowrap',
               active === item.href
                 ? 'border-[#0D3B66] text-[#0D3B66]'
-                : 'border-transparent text-gray-400 hover:text-[#0D3B66]'
+                : 'border-transparent text-black hover:text-[#0D3B66]'
             )}
           >
             {item.label}
@@ -80,7 +80,7 @@ export default function DashboardNavClient({
               'flex items-center gap-1 text-sm font-medium px-4 py-3.5 border-b-2 transition-colors whitespace-nowrap',
               isMoreActive
                 ? 'border-[#0D3B66] text-[#0D3B66]'
-                : 'border-transparent text-gray-400 hover:text-[#0D3B66]'
+                : 'border-transparent text-black hover:text-[#0D3B66]'
             )}
           >
             Plus
@@ -97,7 +97,7 @@ export default function DashboardNavClient({
                     'block px-4 py-2.5 text-sm transition-colors',
                     active === item.href
                       ? 'text-[#0D3B66] font-semibold bg-[#EEF3F8]'
-                      : 'text-gray-500 hover:text-[#0D3B66] hover:bg-gray-50'
+                      : 'text-black hover:text-[#0D3B66] hover:bg-gray-50'
                   )}
                 >
                   {item.label}
