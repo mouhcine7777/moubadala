@@ -26,7 +26,7 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <section className="bg-[#2C4F72] text-white py-24 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-5xl font-bold mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
             Bienvenue sur moubadala.ma
           </h1>
           <p className="text-white/80 text-xl mb-3">La Plateforme Pour :</p>
