@@ -57,21 +57,18 @@ export default function HomePage() {
                 step: "CRÉEZ VOTRE PROFIL COMPLET",
                 desc: "Ajoutez vos coordonnées, logo, description d'activité, présentez vos produits et services.",
                 objectif: "rendre votre activité visible, votre Profil complet renforce votre crédibilité auprès des clients et prospects.",
-                avantage: "Une vitrine référencée sur le site moubadala.ma, accessible à tous les membres de la communauté.",
               },
               {
                 icon: <Search size={40} className="text-[#2C4F72]" />,
                 step: "DÉPOSEZ VOS FICHIERS MÉDIAS",
                 desc: "Publiez vos photos, vidéos, fiches produits ou brochures, faites découvrir vos réalisations.",
                 objectif: "Une communication à fort impact qui met en valeur votre savoir-faire à travers les contenus visuels.",
-                avantage: "Renforcer votre visibilité parmi les membres et lors d'événements professionnels.",
               },
               {
                 icon: <Users size={40} className="text-[#2C4F72]" />,
                 step: "GAGNEZ UN RÉSEAU COMMUNAUTAIRE",
                 desc: "Connectez-vous à d'autres entreprises, développez de nouvelles opportunités d'affaires.",
                 objectif: "Interagir avec les autres acteurs et créer des synergies et des partenariats.",
-                avantage: "Accéder à de nouvelles opportunités d'affaires, de co-développement et de visibilité partagée.",
               },
             ].map((item) => (
               <div
@@ -90,10 +87,6 @@ export default function HomePage() {
                 <p className="text-black text-base leading-relaxed mb-3">
                   <span className="font-bold">Objectif : </span>
                   {item.objectif}
-                </p>
-                <p className="text-black text-base leading-relaxed">
-                  <span className="font-bold">Avantage : </span>
-                  {item.avantage}
                 </p>
               </div>
             ))}

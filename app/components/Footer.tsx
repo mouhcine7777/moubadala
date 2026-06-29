@@ -130,7 +130,7 @@ export default async function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 py-6 text-center text-white text-base">
-          © 2025 Moubadala.ma - Tous droits réservés
+        MGH-CONSULTING © Moubadala.ma . Tous droits réservés. Identifiants :R.C : 495075 - Patente : 33200953 - I.F : 50124753 – CNSS : 24594311
         </div>
       </div>
     </footer>
