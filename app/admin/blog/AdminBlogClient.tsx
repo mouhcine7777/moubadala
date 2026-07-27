@@ -12,7 +12,7 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import clsx from 'clsx'
 
-const inputCls = "border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0D3B66]/20 focus:border-[#0D3B66] bg-white w-full"
+const inputCls = "border border-gray-200 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0D3B66]/20 focus:border-[#0D3B66] bg-white w-full"
 
 type Mode = 'list' | 'create' | 'edit'
 
@@ -58,7 +58,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
   }
 
   async function uploadCover(file: File): Promise<string> {
-    if (file.size > 2 * 1024 * 1024) throw new Error('Image trop volumineuse (max 2 Mo)')
+    if (file.size > 1 * 1024 * 1024) throw new Error('Image trop volumineuse (max 1 Mo)')
     const ext  = file.name.split('.').pop()
     const path = `blog/${Date.now()}.${ext}`
     const { error } = await supabase.storage.from('listings-images').upload(path, file)
@@ -118,39 +118,39 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
       <form onSubmit={handleSave} className="flex flex-col gap-5">
 
         <div className="flex items-center justify-between gap-3">
-          <h3 className="text-sm font-bold text-[#0D3B66]">
+          <h3 className="text-base font-bold text-[#0D3B66]">
             {mode === 'create' ? 'Nouvel article' : "Modifier l'article"}
           </h3>
           <button
             type="button"
             onClick={() => setMode('list')}
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-2 rounded-lg shrink-0"
+            className="flex items-center gap-1.5 text-sm text-black hover:text-[#0D3B66] border border-gray-200 px-3 py-2 rounded-lg shrink-0"
           >
-            <X size={13}/> Annuler
+            <X size={14}/> Annuler
           </button>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 sm:p-6 flex flex-col gap-5">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 sm:p-7 flex flex-col gap-6">
 
           {/* Cover */}
-          <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold text-[#0D3B66]">Image de couverture</label>
+          <div className="flex flex-col gap-2.5">
+            <label className="text-sm font-semibold text-[#0D3B66]">Image de couverture</label>
             <input ref={coverRef} type="file" accept="image/*" onChange={handleCoverChange} className="hidden"/>
             {form.cover_url ? (
-              <div className="relative group w-full h-36 sm:h-40 rounded-xl overflow-hidden border border-gray-100">
+              <div className="relative group w-full h-44 sm:h-52 rounded-xl overflow-hidden border border-gray-100">
                 <img src={form.cover_url} alt="" className="w-full h-full object-cover"/>
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button
                     type="button"
                     onClick={() => coverRef.current?.click()}
-                    className="text-xs font-semibold text-white bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg"
+                    className="text-sm font-semibold text-white bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg"
                   >
                     Changer
                   </button>
                   <button
                     type="button"
                     onClick={() => set('cover_url', '')}
-                    className="text-xs font-semibold text-white bg-red-500/80 hover:bg-red-500 px-3 py-1.5 rounded-lg"
+                    className="text-sm font-semibold text-white bg-red-500/80 hover:bg-red-500 px-4 py-2 rounded-lg"
                   >
                     Supprimer
                   </button>
@@ -161,17 +161,17 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                 type="button"
                 onClick={() => coverRef.current?.click()}
                 disabled={uploadingCover}
-                className="flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#0D3B66]/30 rounded-xl p-6 sm:p-8 text-xs text-gray-400 hover:text-[#0D3B66] transition-colors"
+                className="flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#0D3B66]/30 rounded-xl p-8 sm:p-10 text-sm text-black hover:text-[#0D3B66] transition-colors"
               >
-                <Upload size={16}/>
-                {uploadingCover ? 'Upload...' : 'Ajouter une image de couverture · Max 2 Mo'}
+                <Upload size={18}/>
+                {uploadingCover ? 'Upload...' : 'Ajouter une image de couverture · Max 1 Mo'}
               </button>
             )}
           </div>
 
           {/* Titre */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-[#0D3B66]">Titre *</label>
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#0D3B66]">Titre *</label>
             <input
               type="text"
               required
@@ -183,8 +183,8 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
           </div>
 
           {/* Extrait */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-[#0D3B66]">Extrait</label>
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#0D3B66]">Extrait</label>
             <textarea
               value={form.excerpt}
               onChange={e => set('excerpt', e.target.value)}
@@ -195,17 +195,17 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
           </div>
 
           {/* Contenu */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-[#0D3B66]">Contenu *</label>
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#0D3B66]">Contenu *</label>
             <textarea
               required
               value={form.content}
               onChange={e => set('content', e.target.value)}
               placeholder="Contenu complet de l'article..."
               rows={16}
-              className={inputCls + ' resize-none font-mono text-xs'}
+              className={inputCls + ' resize-none font-mono text-sm'}
             />
-            <p className="text-xs text-gray-400">Supporte le Markdown : **gras**, *italique*, # Titre, - liste</p>
+            <p className="text-sm text-black">Supporte le Markdown : **gras**, *italique*, # Titre, - liste</p>
           </div>
 
           {/* Publié */}
@@ -225,7 +225,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                 form.published ? 'translate-x-5' : 'translate-x-0.5'
               )}/>
             </div>
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-base font-medium text-black">
               {form.published ? 'Publié — visible sur /blog' : 'Brouillon — non visible'}
             </span>
           </label>
@@ -235,7 +235,7 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
           <button
             type="button"
             onClick={() => setMode('list')}
-            className="text-sm text-gray-500 border border-gray-200 px-4 py-2.5 rounded-lg hover:border-gray-300 transition-colors"
+            className="text-sm text-black border border-gray-200 px-4 py-2.5 rounded-lg hover:border-gray-300 transition-colors"
           >
             Annuler
           </button>
@@ -253,48 +253,48 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
 
   // ── LIST ─────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <button
         onClick={openCreate}
-        className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#e09510] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors self-start"
+        className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#e09510] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors self-start"
       >
-        <Plus size={15}/> Nouvel article
+        <Plus size={16}/> Nouvel article
       </button>
 
       {posts.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-10 sm:p-12 text-center shadow-sm">
-          <FileText size={32} className="text-gray-200 mx-auto mb-3"/>
-          <p className="text-gray-400 text-sm">Aucun article. Créez votre premier article.</p>
+        <div className="bg-white rounded-xl border border-gray-100 p-14 text-center shadow-sm text-black text-base">
+          <FileText size={32} className="text-gray-300 mx-auto mb-3"/>
+          Aucun article. Créez votre premier article.
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {posts.map(post => (
             <div key={post.id} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="flex flex-col sm:flex-row items-start gap-4 p-4 sm:p-5">
+              <div className="flex flex-col sm:flex-row items-start gap-5 p-5 sm:p-6">
 
                 {/* Cover thumbnail */}
                 {post.cover_url && (
-                  <div className="w-full sm:w-20 h-40 sm:h-16 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                  <div className="w-full sm:w-28 h-44 sm:h-20 rounded-lg overflow-hidden shrink-0 bg-gray-100">
                     <img src={post.cover_url} alt="" className="w-full h-full object-cover"/>
                   </div>
                 )}
 
                 {/* Infos */}
-                <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+                <div className="flex-1 min-w-0 flex flex-col gap-2">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={clsx(
-                      'text-xs font-semibold px-2.5 py-0.5 rounded-full',
-                      post.published ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
+                      'text-sm font-semibold px-3 py-1 rounded-full',
+                      post.published ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-black'
                     )}>
                       {post.published ? 'Publié' : 'Brouillon'}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-sm text-black">
                       {format(new Date(post.created_at), 'dd MMM yyyy', { locale: fr })}
                     </span>
                   </div>
-                  <p className="text-sm font-bold text-[#0D3B66] truncate">{post.title}</p>
+                  <p className="text-base font-bold text-[#0D3B66] truncate">{post.title}</p>
                   {post.excerpt && (
-                    <p className="text-xs text-gray-400 line-clamp-2">{post.excerpt}</p>
+                    <p className="text-sm text-black line-clamp-2">{post.excerpt}</p>
                   )}
                 </div>
 
@@ -305,9 +305,9 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                       href={`/blog/${post.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#0D3B66] border border-gray-200 px-3 py-1.5 rounded-lg transition-colors"
+                      className="flex items-center gap-1.5 text-sm text-black hover:text-[#0D3B66] border border-gray-200 px-3.5 py-2 rounded-lg transition-colors"
                     >
-                      <ExternalLink size={12}/> Voir
+                      <ExternalLink size={14}/> Voir
                     </a>
                   )}
 
@@ -315,21 +315,21 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                     onClick={() => handleToggle(post.id, post.published)}
                     disabled={loadingId === post.id}
                     className={clsx(
-                      'flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors disabled:opacity-40',
+                      'flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-lg border transition-colors disabled:opacity-40',
                       post.published
                         ? 'text-amber-700 bg-amber-50 border-amber-200 hover:bg-amber-100'
                         : 'text-green-700 bg-green-50 border-green-200 hover:bg-green-100'
                     )}
                   >
-                    {post.published ? <EyeOff size={12}/> : <Eye size={12}/>}
+                    {post.published ? <EyeOff size={14}/> : <Eye size={14}/>}
                     {loadingId === post.id ? '...' : post.published ? 'Dépublier' : 'Publier'}
                   </button>
 
                   <button
                     onClick={() => openEdit(post)}
-                    className="flex items-center gap-1.5 text-xs text-[#0D3B66] border border-[#0D3B66]/20 hover:border-[#0D3B66] px-3 py-1.5 rounded-lg transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-[#0D3B66] border border-[#0D3B66]/20 hover:border-[#0D3B66] px-3.5 py-2 rounded-lg transition-colors"
                   >
-                    <Pencil size={12}/> Modifier
+                    <Pencil size={14}/> Modifier
                   </button>
 
                   {confirmDeleteId === post.id ? (
@@ -337,13 +337,13 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                       <button
                         onClick={() => handleDelete(post.id)}
                         disabled={loadingId === post.id}
-                        className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-lg disabled:opacity-40"
+                        className="text-sm font-semibold text-white bg-red-500 hover:bg-red-600 px-3.5 py-2 rounded-lg disabled:opacity-40"
                       >
                         {loadingId === post.id ? '...' : 'Confirmer'}
                       </button>
                       <button
                         onClick={() => setConfirmDeleteId(null)}
-                        className="text-xs text-gray-400 border border-gray-200 px-3 py-1.5 rounded-lg"
+                        className="text-sm text-black border border-gray-200 px-3.5 py-2 rounded-lg"
                       >
                         Annuler
                       </button>
@@ -351,9 +351,9 @@ export default function AdminBlogClient({ posts }: { posts: BlogPost[] }) {
                   ) : (
                     <button
                       onClick={() => setConfirmDeleteId(post.id)}
-                      className="text-xs text-red-400 hover:text-red-600 border border-red-100 hover:border-red-200 p-1.5 rounded-lg transition-colors"
+                      className="text-sm text-red-500 hover:text-red-600 border border-red-100 hover:border-red-200 p-2 rounded-lg transition-colors"
                     >
-                      <Trash2 size={13}/>
+                      <Trash2 size={15}/>
                     </button>
                   )}
                 </div>

@@ -172,17 +172,17 @@ function RequestCard({
         </div>
       )}
 
-      {/* Bouton créer transaction si en finalisation et receveur */}
+      {/* Bouton créer le contrat d'échange si en finalisation et receveur */}
       {request.status === 'finalizing' && mode === 'received' && (
         <div className="px-5 py-3 border-t border-purple-100 bg-purple-50 flex items-center justify-between gap-3 flex-wrap">
           <p className="text-sm text-purple-700 font-medium">
-            Échange en finalisation — documentez la transaction une fois conclue.
+            Échange en finalisation — générez votre contrat directement sur la plateforme.
           </p>
           <Link
-            href={`/dashboard/transactions/new?request=${request.id}`}
+            href={`/dashboard/contracts/new?request=${request.id}`}
             className="flex items-center gap-1.5 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition-colors shrink-0"
           >
-            <FileText size={14}/> Créer transaction
+            <FileText size={14}/> Créer le contrat
           </Link>
         </div>
       )}

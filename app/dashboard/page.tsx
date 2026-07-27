@@ -1,6 +1,7 @@
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { getOrCreateProfile, getListings } from '@/lib/actions/profile'
+import { acceptContractInvite } from '@/lib/actions/contracts'
 import { supabase } from '@/lib/supabase'
 import {
   LayoutDashboard, Plus, FileText, Clock,
@@ -109,7 +110,7 @@ function ProfileCompletion({ profile }: { profile: any }) {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>
+  searchParams: Promise<{ status?: string; contract_invite?: string }>
 }) {
   const { userId } = await auth()
   if (!userId) redirect('/connexion')
@@ -118,6 +119,13 @@ export default async function DashboardPage({
   const email = user?.emailAddresses[0]?.emailAddress ?? ''
 
   if (email === process.env.ADMIN_EMAIL) redirect('/admin')
+
+  const { contract_invite: contractInviteToken } = await searchParams
+
+  if (contractInviteToken) {
+    const contractId = await acceptContractInvite(contractInviteToken, userId)
+    if (contractId) redirect(`/dashboard/contracts/${contractId}`)
+  }
 
   const [profile, listings] = await Promise.all([
     getOrCreateProfile(userId, email),

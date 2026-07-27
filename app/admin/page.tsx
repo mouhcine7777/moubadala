@@ -4,9 +4,11 @@ import { supabase } from '@/lib/supabase'
 export default async function AdminPage() {
   const listings = await getAllListings()
 
-  const [{ data: requests }, { data: profiles }] = await Promise.all([
+  const [{ data: requests }, { data: profiles }, { data: contracts }, { count: pendingReserves }] = await Promise.all([
     supabase.from('requests').select('id, status'),
     supabase.from('profiles').select('id, status').not('company_name', 'is', null),
+    supabase.from('contracts').select('id, status'),
+    supabase.from('contract_reserves').select('id', { count: 'exact', head: true }).eq('status', 'ouverte'),
   ])
 
   const stats = [
@@ -22,6 +24,11 @@ export default async function AdminPage() {
     { label: 'Profils en attente',    value: profiles?.filter(p => p.status === 'pending_review').length ?? 0,   bg: 'bg-amber-50',  text: 'text-amber-700'  },
     { label: 'Profils approuvés',     value: profiles?.filter(p => p.status === 'approved').length ?? 0,         bg: 'bg-green-50',  text: 'text-green-700'  },
     { label: 'Profils rejetés',       value: profiles?.filter(p => p.status === 'rejected').length ?? 0,         bg: 'bg-red-50',    text: 'text-red-600'    },
+    { label: 'Contrats total',        value: contracts?.length ?? 0,                                             bg: 'bg-white',     text: 'text-[#0D3B66]'  },
+    { label: 'Contrats en préparation', value: contracts?.filter(c => ['brouillon','en_preparation','en_attente_validation','en_attente_signature'].includes(c.status)).length ?? 0, bg: 'bg-purple-50', text: 'text-purple-700' },
+    { label: 'Contrats en exécution', value: contracts?.filter(c => c.status === 'en_execution').length ?? 0,    bg: 'bg-indigo-50', text: 'text-indigo-700' },
+    { label: 'Contrats clôturés',     value: contracts?.filter(c => c.status === 'cloture').length ?? 0,         bg: 'bg-green-50',  text: 'text-green-700'  },
+    { label: 'Réserves en attente',   value: pendingReserves ?? 0,                                                bg: 'bg-red-50',    text: 'text-red-600'    },
   ]
 
   return (

@@ -1,9 +1,19 @@
 import { SignUp } from "@clerk/nextjs";
 
-export default function InscriptionPage() {
+export default async function InscriptionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ contract_invite?: string }>
+}) {
+  const { contract_invite: contractInvite } = await searchParams;
+  const fallbackRedirectUrl = contractInvite
+    ? `/dashboard?contract_invite=${contractInvite}`
+    : undefined;
+
   return (
     <section className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16">
       <SignUp
+        fallbackRedirectUrl={fallbackRedirectUrl}
         appearance={{
           elements: {
             rootBox: "w-full max-w-md",

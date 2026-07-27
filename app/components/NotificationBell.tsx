@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { Bell, X, Check, CheckCheck, ArrowLeftRight, MessageCircle, Clock, Sparkles, Megaphone } from 'lucide-react'
+import { Bell, X, Check, CheckCheck, ArrowLeftRight, MessageCircle, Clock, Sparkles, Megaphone, FileSignature, CheckCircle2, AlertTriangle, PackageCheck } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { markAllRead, markOneRead } from '@/lib/actions/notifications'
@@ -15,6 +15,15 @@ const TYPE_CONFIG: Record<string, { icon: React.ReactNode; color: string; bg: st
   listing_expiring:{ icon: <Clock size={13}/>,          color: 'text-amber-600',  bg: 'bg-amber-50'  },
   new_matching:    { icon: <Sparkles size={13}/>,       color: 'text-purple-600', bg: 'bg-purple-50' },
   platform:        { icon: <Megaphone size={13}/>,      color: 'text-green-600',  bg: 'bg-green-50'  },
+  contract_invited:           { icon: <FileSignature size={13}/>, color: 'text-purple-600', bg: 'bg-purple-50' },
+  contract_ready_to_sign:     { icon: <FileSignature size={13}/>, color: 'text-[#0D3B66]',  bg: 'bg-[#EEF3F8]' },
+  contract_signed_partial:    { icon: <FileSignature size={13}/>, color: 'text-amber-600',  bg: 'bg-amber-50'  },
+  contract_signed_complete:   { icon: <CheckCircle2 size={13}/>,  color: 'text-teal-600',   bg: 'bg-teal-50'   },
+  contract_service_declared:  { icon: <PackageCheck size={13}/>,  color: 'text-indigo-600', bg: 'bg-indigo-50' },
+  contract_reserve_raised:    { icon: <AlertTriangle size={13}/>, color: 'text-red-600',    bg: 'bg-red-50'    },
+  contract_reserve_resolved:  { icon: <CheckCircle2 size={13}/>,  color: 'text-green-600',  bg: 'bg-green-50'  },
+  contract_deadline_reminder: { icon: <Clock size={13}/>,         color: 'text-amber-600',  bg: 'bg-amber-50'  },
+  contract_closed:            { icon: <CheckCircle2 size={13}/>,  color: 'text-green-600',  bg: 'bg-green-50'  },
 }
 
 export default function NotificationBell({

@@ -9,6 +9,7 @@ const mainLinks = [
   { label: 'Annonces',     href: '/dashboard/annonces'     },
   { label: 'Demandes',     href: '/dashboard/demandes'     },
   { label: 'Messages',     href: '/dashboard/messages'     },
+  { label: 'Contrats',     href: '/dashboard/contracts'    },
   { label: 'Transactions', href: '/dashboard/transactions' },
 ]
 

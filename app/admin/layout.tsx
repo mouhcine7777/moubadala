@@ -22,6 +22,7 @@ export default async function AdminLayout({
     { label: 'Vue générale',  href: '/admin'           },
     { label: 'Annonces',      href: '/admin/annonces'  },
     { label: 'Demandes',      href: '/admin/demandes'  },
+    { label: 'Contrats',      href: '/admin/contrats'  },
     { label: 'Membres',       href: '/admin/membres'   },
     { label: 'Blog',          href: '/admin/blog'      },
   ]
@@ -50,7 +51,7 @@ export default async function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium px-4 sm:px-5 py-3.5 border-b-2 transition-colors whitespace-nowrap ${
+                className={`text-base font-semibold px-5 sm:px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))
                     ? 'border-[#0D3B66] text-[#0D3B66]'
                     : 'border-transparent text-black hover:text-[#0D3B66]'

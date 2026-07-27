@@ -29,7 +29,7 @@ const navLinks: NavItem[] = [
     href: "#",
     dropdown: [
       { label: "Ressources Professionnelles", href: "/ressources-professionnelles", protected: true },
-      { label: "Votre Adhésions", href: "/adhesions" },
+      { label: "Votre Adhésion", href: "/adhesions" },
       { label: "Votre inscription", href: "/votre-inscription" },
     ],
   },

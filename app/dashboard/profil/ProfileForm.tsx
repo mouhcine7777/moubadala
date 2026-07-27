@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/lib/types'
 import {
   Building2, MapPin, Phone, Briefcase,
-  Mail, FileText, User, Hash, AlignLeft
+  Mail, FileText, User, Hash, AlignLeft, Scale
 } from 'lucide-react'
 import { LogoUpload, GalleryUpload, VideoUpload } from './MediaUpload'
 
@@ -38,7 +38,17 @@ type FormState = {
   logo_url:       string
   gallery_images: string[]
   video_url:      string
+  if_number:      string
+  legal_form:     string
+  capital_social: string
+  rep_prenom:     string
+  rep_nom:        string
+  rep_fonction:   string
+  rep_email:      string
+  rep_phone:      string
 }
+
+const LEGAL_FORMS = ['SARL', 'SARL-AU', 'SA', 'SAS', 'Auto-entrepreneur', 'Autre']
 
 function Field({
   label, required, icon, children,
@@ -83,6 +93,14 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
     logo_url:       profile.logo_url       ?? '',
     gallery_images: profile.gallery_images ?? [],
     video_url:      profile.video_url      ?? '',
+    if_number:      profile.if_number      ?? '',
+    legal_form:     profile.legal_form     ?? '',
+    capital_social: profile.capital_social?.toString() ?? '',
+    rep_prenom:     profile.rep_prenom     ?? '',
+    rep_nom:        profile.rep_nom        ?? '',
+    rep_fonction:   profile.rep_fonction   ?? '',
+    rep_email:      profile.rep_email      ?? '',
+    rep_phone:      profile.rep_phone      ?? '',
   })
 
   function set(field: keyof FormState, value: string) {
@@ -97,6 +115,7 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
       .from('profiles')
       .update({
         ...form,
+        capital_social: form.capital_social ? Number(form.capital_social) : null,
         status: 'pending_review', // passe en attente de validation admin
       })
       .eq('clerk_user_id', profile.clerk_user_id)
@@ -247,6 +266,102 @@ export default function ProfileForm({ profile }: { profile: Profile }) {
             />
           </Field>
 
+        </div>
+      </div>
+
+      {/* Section 1bis — Identité légale et représentant (contractualisation) */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-8 flex flex-col gap-5">
+        <div className="border-b border-gray-100 pb-3">
+          <h2 className="text-sm font-bold text-[#0D3B66] uppercase tracking-wide">
+            Identité légale et représentant
+          </h2>
+          <p className="text-xs text-gray-400 mt-1">
+            Ces informations sont utilisées pour vous identifier automatiquement dans vos contrats d'échange.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Field label="IF (Identifiant Fiscal)" icon={<Hash size={14}/>}>
+            <input
+              type="text"
+              value={form.if_number}
+              onChange={e => set('if_number', e.target.value)}
+              placeholder="N° IF"
+              className={inputCls}
+            />
+          </Field>
+
+          <Field label="Forme juridique" icon={<Scale size={14}/>}>
+            <select
+              value={form.legal_form}
+              onChange={e => set('legal_form', e.target.value)}
+              className={inputCls}
+            >
+              <option value="">Sélectionner</option>
+              {LEGAL_FORMS.map(f => <option key={f} value={f}>{f}</option>)}
+            </select>
+          </Field>
+
+          <Field label="Capital social (MAD)" icon={<Hash size={14}/>}>
+            <input
+              type="number"
+              value={form.capital_social}
+              onChange={e => set('capital_social', e.target.value)}
+              placeholder="Ex : 100000"
+              className={inputCls}
+            />
+          </Field>
+        </div>
+
+        <div className="border-t border-gray-100 pt-5">
+          <p className="text-sm font-semibold text-[#0D3B66] mb-3">Représentant légal (signataire de vos contrats)</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Field label="Prénom" icon={<User size={14}/>}>
+              <input
+                type="text"
+                value={form.rep_prenom}
+                onChange={e => set('rep_prenom', e.target.value)}
+                placeholder="Prénom du représentant légal"
+                className={inputCls}
+              />
+            </Field>
+            <Field label="Nom" icon={<User size={14}/>}>
+              <input
+                type="text"
+                value={form.rep_nom}
+                onChange={e => set('rep_nom', e.target.value)}
+                placeholder="Nom du représentant légal"
+                className={inputCls}
+              />
+            </Field>
+            <Field label="Fonction" icon={<Briefcase size={14}/>}>
+              <input
+                type="text"
+                value={form.rep_fonction}
+                onChange={e => set('rep_fonction', e.target.value)}
+                placeholder="Ex : Gérant, Directeur Général"
+                className={inputCls}
+              />
+            </Field>
+            <Field label="Email professionnel" icon={<Mail size={14}/>}>
+              <input
+                type="email"
+                value={form.rep_email}
+                onChange={e => set('rep_email', e.target.value)}
+                placeholder="representant@entreprise.ma"
+                className={inputCls}
+              />
+            </Field>
+            <Field label="Téléphone" icon={<Phone size={14}/>}>
+              <input
+                type="tel"
+                value={form.rep_phone}
+                onChange={e => set('rep_phone', e.target.value)}
+                placeholder="+212 6 00 00 00 00"
+                className={inputCls}
+              />
+            </Field>
+          </div>
         </div>
       </div>
 
