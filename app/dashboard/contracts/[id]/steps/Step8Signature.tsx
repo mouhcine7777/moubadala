@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { CheckCircle2, FileSignature, Download } from 'lucide-react'
 import { sumPartyTotal } from '@/lib/contract-utils'
 
@@ -104,7 +105,19 @@ export default function Step8Signature({
           </label>
           <label className="flex items-start gap-2.5 text-sm text-[#0D3B66] cursor-pointer">
             <input type="checkbox" checked={checkCgu} onChange={e => setCheckCgu(e.target.checked)} className="mt-0.5" />
-            Je reconnais avoir lu et accepté les Conditions Générales du contractualisation.
+            <span>
+              Je reconnais avoir lu et accepté les{' '}
+              <Link
+                href="/ressources-professionnelles#conditions-generales"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                onMouseDown={e => e.stopPropagation()}
+                className="underline font-semibold hover:text-[#0a2f52]"
+              >
+                Conditions Générales du contractualisation
+              </Link>.
+            </span>
           </label>
         </div>
       )}

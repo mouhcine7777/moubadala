@@ -3,6 +3,19 @@ import { FileText, Truck, CheckSquare, DollarSign, BookOpen, MessageCircle, Chev
 
 const resources = [
   {
+    id: "conditions-generales",
+    icon: <FileText size={28} className="text-[#0D3B66]" />,
+    title: "Conditions Générales du Contractualisation",
+    subtitle: "Cadre contractuel de la plateforme",
+    description: "Cadre contractuel régissant les échanges entre entreprises membres, applicable à tout contrat conclu sur Moubadala.",
+    tag: "Juridique",
+    tagColor: "bg-blue-50 text-blue-600",
+    files: [
+      { label: ".PDF (FR)", href: "/ressources/cadre-contractuel.pdf", ext: "PDF" },
+      { label: ".PDF (AR)", href: "/ressources/cadre-contractuel-AR.pdf", ext: "PDF" },
+    ],
+  },
+  {
     icon: <FileText size={28} className="text-[#0D3B66]" />,
     title: "Contrat type d'échange à valider",
     subtitle: "par votre Conseiller juridique",
@@ -125,7 +138,8 @@ export default function RessourcesPage() {
             {resources.map((res) => (
               <div
                 key={res.title}
-                className="border border-gray-200 rounded-xl p-7 hover:shadow-md transition-shadow flex flex-col gap-4"
+                id={res.id}
+                className="border border-gray-200 rounded-xl p-7 hover:shadow-md transition-shadow flex flex-col gap-4 scroll-mt-24"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
