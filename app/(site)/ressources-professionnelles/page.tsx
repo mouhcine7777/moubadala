@@ -5,7 +5,7 @@ const resources = [
   {
     id: "conditions-generales",
     icon: <FileText size={28} className="text-[#0D3B66]" />,
-    title: "Conditions Générales du Contractualisation",
+    title: "Conditions Générales de Contractualisation",
     subtitle: "Cadre contractuel de la plateforme",
     description: "Cadre contractuel régissant les échanges entre entreprises membres, applicable à tout contrat conclu sur Moubadala.",
     tag: "Juridique",
@@ -65,7 +65,7 @@ const resources = [
     title: "Guide Espace Client",
     subtitle: "Document d'information",
     description: "Guide pratique pour naviguer dans votre espace client, gérer vos échanges et exploiter toutes les fonctionnalités disponibles.",
-    tag: "Juridique",
+    tag: "Information",
     tagColor: "bg-blue-50 text-blue-600",
     files: [
       { label: ".PDF", href: "/ressources/guide-utilisateur.pdf", ext: "PDF" },
@@ -76,7 +76,7 @@ const resources = [
     title: "Comment Publier une Annonce",
     subtitle: "Document d'information",
     description: "Guide complet pour bien utiliser la plateforme et tirer le meilleur parti de vos échanges inter-entreprises.",
-    tag: "Juridique",
+    tag: "Information",
     tagColor: "bg-blue-50 text-blue-600",
     files: [
       { label: "Consulter", href: "/guide-utilisateur", ext: "LINK" },
@@ -92,14 +92,6 @@ const faqLinks = [
     href: "/faq",
     borderColor: "border-[#0D3B66]",
     linkColor: "text-[#0D3B66]",
-  },
-  {
-    title: "Annuaire des Conseillers Agréés",
-    description: "Liste de conseillers juridiques et comptables spécialisés dans les échanges inter-entreprises.",
-    linkLabel: "Trouver un expert",
-    href: "/contact",
-    borderColor: "border-[#1a8a6e]",
-    linkColor: "text-[#1a8a6e]",
   },
 ];
 
@@ -197,7 +189,7 @@ export default function RessourcesPage() {
           <h2 className="text-2xl md:text-3xl font-bold text-[#0D3B66] text-center mb-10">
             Foire Aux Questions
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
             {faqLinks.map((item) => (
               <div
                 key={item.title}
